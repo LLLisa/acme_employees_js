@@ -152,6 +152,7 @@ spacer('');
 
 function generateManagementTree(inputData) {
   const employees = inputData.slice();
+
   employees.forEach((employee) => {
     employee['reports'] = findReportsForEmployee(employee, employees);
   });
@@ -177,10 +178,9 @@ moe
 */
 
 function displayManagementTree(data) {
-  const managers = findManagementChain(data, employees).length;
-  const dashes = Array(managers).fill('-').join('');
+  const dashes = Array(findManagementChain(data, employees).length)
+    .fill('-')
+    .join('');
   console.log(`${dashes}${data.name}`);
-  for (let i = 0; i < data.reports.length; i++) {
-    displayManagementTree(data.reports[i]);
-  }
+  data.reports.forEach((X) => displayManagementTree(X));
 }
